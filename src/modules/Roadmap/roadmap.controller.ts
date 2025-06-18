@@ -39,9 +39,24 @@ const getSingleRoadmap = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const upvoteRoadmapItem = catchAsync(async (req: Request, res: Response) => {
+  const { roadmapId } = req.params;
+  const userId = req.user?._id; // assuming you're using auth middleware
+
+  const result = await RoadmapService.upvoteRoadmapItem(roadmapId, userId);
+
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: 'Upvote successful',
+    data: result,
+  });
+});
+
 
 export const RoadmapController = {
   getAllRoadmap,
   getSingleRoadmap,
   createRoadmap,
+  upvoteRoadmapItem
 };

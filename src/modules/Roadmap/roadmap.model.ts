@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { TRoadmap } from "./roadmap.interface";
 
 const roadmapSchema = new Schema<TRoadmap>(
@@ -12,6 +12,7 @@ const roadmapSchema = new Schema<TRoadmap>(
             default: 'Planned',
         },
         upvotes: { type: Number, default: 0 },
+        upvotedBy: [{ type: Types.ObjectId, ref: 'User' }] 
     },
     {
         timestamps:true
