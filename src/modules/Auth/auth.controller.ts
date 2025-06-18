@@ -4,7 +4,6 @@ import { catchAsync } from '../../app/utils/catchAsync';
 import config from '../../app/config';
 import sendResponse from '../../app/utils/sendResponse';
 
-// Login user
 const loginUser = catchAsync(async (req, res) => {
 const result = await AuthService.loginUser(req.body);
 
@@ -17,7 +16,6 @@ const result = await AuthService.loginUser(req.body);
     maxAge: 1000 * 60 * 60 * 24 * 7,
   });
 
-  // Send Response
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
@@ -26,11 +24,8 @@ const result = await AuthService.loginUser(req.body);
   });
 });
 
-// Register user
 const registerUser = catchAsync(async (req, res) => {
-  const result = await AuthService.registerUser(req.body);
-
-  // Send Response
+  const result = await AuthService.registerUser(req.body);  
   sendResponse(res, {
     statusCode: status.CREATED,
     success: true,
@@ -39,7 +34,7 @@ const registerUser = catchAsync(async (req, res) => {
   });
 });
 
-// refresh token
+
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
   const result = await AuthService.refreshToken(refreshToken);
