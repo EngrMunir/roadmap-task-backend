@@ -30,8 +30,10 @@ const loginUser = async (payload: TLoginUser) => {
   }
 
   const jwtPayload = {
+    name:user?.name,
     email: user?.email,
     role: user?.role,
+    _id:user?._id
   };
  
   const accessToken = createToken(

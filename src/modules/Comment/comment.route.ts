@@ -1,12 +1,13 @@
 import express from 'express';
 import { CommentController } from './comment.controller';
+import auth from '../../app/middleware/auth';
 
 const router = express.Router();
 
 router.get("/:roadmapId", CommentController.getComments);
 
-router.post("/", CommentController.createComment);
-router.put("/:commentId", CommentController.updateComment);
-router.delete("/:commentId", CommentController.deleteComment);
+router.post("/", auth(),CommentController.createComment);
+router.put("/:commentId",auth(), CommentController.updateComment);
+router.delete("/:commentId",auth(), CommentController.deleteComment);
 
-export default router;
+export const CommentRoutes = router;

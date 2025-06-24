@@ -8,6 +8,7 @@ export interface IUser {
     email:string;
     password:string;
     role: Role;
+    _id?: string;  //new addition
     createdAt?:Date;
     updatedAt?:Date;
 }

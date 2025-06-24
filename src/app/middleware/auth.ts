@@ -16,7 +16,6 @@ const auth = (...requiredRoles:TUserRole[])=>{
     return catchAsync( async (req:Request, res:Response, next:NextFunction)=>{
         const token = req.headers.authorization?.split(' ')[1];
 
-        // checking if the token is missing
         if(!token){
             throw new AppError(status.UNAUTHORIZED, 'Your are not authorized!');
         }
@@ -24,7 +23,6 @@ const auth = (...requiredRoles:TUserRole[])=>{
         let decoded;
 
         try {
-            // check if the gien token is valid
             decoded = jwt.verify(
                 token,
                 config.jwt_access_secret as string
@@ -36,7 +34,6 @@ const auth = (...requiredRoles:TUserRole[])=>{
 
         const { role, email } = decoded;
 
-        // checking if the user is exist
         const user = await User.isUserExistByEmail(email);
         if(!user){
             throw new AppError(status.NOT_FOUND,'This user is not exist');
@@ -48,7 +45,12 @@ const auth = (...requiredRoles:TUserRole[])=>{
                 'Your are not authorized!!'
             );
         }
-        req.user = user;
+        req.user = {
+            _id: user._id?.toString(),
+            email: user.email,
+            role: user.role,
+        };
+
             next();
 
     })

@@ -73,8 +73,6 @@ const deleteComment = async (commentId: string, userId: string) => {
 
   await comment.deleteOne();
 
-  // Optional: you can also delete all nested replies recursively if you want
-
   return { message: "Comment deleted successfully" };
 };
 

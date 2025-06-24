@@ -5,7 +5,7 @@ const commentSchema = new Schema<TComment>({
     roadmapId:{ type: Schema.Types.ObjectId, ref:'Roadmap', required:true},
     userId: { type: Schema.Types.ObjectId, ref:'User', required:true },
     content:{ type:String, required:true, maxlength:300},
-    parentCommentId:{type: Schema.Types.ObjectId, ref:'Comment', required:true},
+    parentCommentId:{type: Schema.Types.ObjectId, ref:'Comment', default:null },
     depth:{ type:Number, required:true, default:0}
 },
 {
