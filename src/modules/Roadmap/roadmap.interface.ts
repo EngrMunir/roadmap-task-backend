@@ -12,3 +12,11 @@ export type TRoadmap ={
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+export interface IRoadmapFilters {
+  status?: 'Planned' | 'In Progress' | 'Completed';
+  category?: string;
+}
+
+export type TSortFields = 'createdAt' | 'upvotes';
+export type TSortOrder = 'asc' | 'desc';

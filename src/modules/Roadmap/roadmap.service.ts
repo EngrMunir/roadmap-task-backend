@@ -4,10 +4,32 @@ import { TRoadmap } from "./roadmap.interface";
 import { Roadmap } from "./roadmap.model";
 import status from "http-status";
 
-const getAllRoadmap = async () => {
-  const roadmaps = await Roadmap.find();
+const getAllRoadmap = async (
+  filters: { status?: string; category?: string },
+  sortBy?: string,
+  sortOrder?: string
+) => {
+  const query: any = {};
+
+  if (filters.status) {
+    query.status = filters.status;
+  }
+  if (filters.category) {
+    query.category = filters.category;
+  }
+
+  let sortQuery: any = {};
+  if (sortBy) {
+    const order = sortOrder === 'asc' ? 1 : -1;
+    sortQuery[sortBy] = order;
+  } else {
+    sortQuery = { createdAt: -1 }; // Default sorting
+  }
+
+  const roadmaps = await Roadmap.find(query).sort(sortQuery).select('-upvotedBy');
   return roadmaps;
 };
+
 
 const getSingleRoadmap = async (id: string) => {
   return await Roadmap.findById(id);

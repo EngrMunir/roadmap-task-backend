@@ -17,7 +17,14 @@ const createRoadmap = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllRoadmap = catchAsync(async (req: Request, res: Response) => {
-  const result = await RoadmapService.getAllRoadmap();
+  const filters = {
+    status: req.query.status as string,
+    category: req.query.category as string,
+  };
+  const sortBy = req.query.sortBy as string;
+  const sortOrder = req.query.sortOrder as string;
+
+  const result = await RoadmapService.getAllRoadmap(filters, sortBy, sortOrder);
 
   sendResponse(res, {
     statusCode: status.OK,
@@ -26,6 +33,7 @@ const getAllRoadmap = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 
 const getSingleRoadmap = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;

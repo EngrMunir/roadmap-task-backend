@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import AppError from "../../app/errors/AppError";
 import { Comment } from "./comment.model";
 import status from "http-status";
+import { TComment } from "./comment.interface";
 
 const createComment = async(data:{
     roadmapId:string;
@@ -32,7 +33,7 @@ const getCommentsByRoadmap = async (roadmapId:string) =>{
     const comments = await Comment.find({roadmapId})
         .populate("userId","name email")
         .sort({createdAt: 1})
-        .lean();
+        .lean<TComment[]>();
 
     const commentMap: Record<string,any> ={};
     const roots:any[] = [];
